@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.elastic.srb.elasticRepository.EbookElasticRepository;
 import com.elastic.srb.model.Ebook;
+import com.elastic.srb.model.Language;
 import com.elastic.srb.repository.EbookRepository;
 import com.elastic.srb.service.EbookElasticService;
 
@@ -67,9 +68,9 @@ public class EbookElasticServiceImpl implements EbookElasticService{
 	}
 
 	@Override
-	public List<Ebook> findByLanguage(String language) {
+	public List<Ebook> findByLanguage(Language language) {
 		// TODO Auto-generated method stub
-		return null;
+		return bookElastic.findByLanguage(language);
 	}
 
 	@Override

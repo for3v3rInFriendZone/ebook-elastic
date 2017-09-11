@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import com.elastic.srb.model.Ebook;
+import com.elastic.srb.model.Language;
 
 public interface EbookElasticRepository extends ElasticsearchRepository<Ebook, Long>{
 	
@@ -15,7 +16,8 @@ public interface EbookElasticRepository extends ElasticsearchRepository<Ebook, L
     
     List<Ebook> findByKeywords(String keyword);
     
-    List<Ebook> findByLanguage(String language);
-    
     List<Ebook> findByText(String text);
+    
+    List<Ebook> findByLanguage(Language language);
+    
 }

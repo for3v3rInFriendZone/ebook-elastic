@@ -10,14 +10,6 @@ import com.elastic.srb.service.EbookElasticService;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SrbApplication.class)
 public class SrbApplicationTests {
-	
-	@Autowired
-    private EbookElasticService bookService;
-
-    @Autowired
-    private ElasticsearchTemplate esTemplate;
-    
-
 
 
 }
