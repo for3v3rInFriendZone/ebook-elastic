@@ -1,14 +1,24 @@
 package com.elastic.srb.service.impl;
 
+import static org.elasticsearch.index.query.MatchQueryBuilder.Operator.AND;
+
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.elasticsearch.common.unit.Fuzziness;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Service;
 
+import com.elastic.srb.dto.SearchDTO;
 import com.elastic.srb.elasticRepository.EbookElasticRepository;
 import com.elastic.srb.model.Ebook;
 import com.elastic.srb.model.Language;
@@ -77,6 +87,32 @@ public class EbookElasticServiceImpl implements EbookElasticService{
 	public List<Ebook> findByText(String text) {
 		// TODO Auto-generated method stub
 		return bookElastic.findByText(text);
+	}
+
+	@Override
+	public List<Ebook> findByFields(List<SearchDTO> searchModel) {
+		
+		List<QueryBuilder> qbList = new ArrayList<QueryBuilder>();
+		
+		for(SearchDTO sdto : searchModel){
+			qbList.add(QueryBuilders.matchQuery(sdto.getField(), sdto.getValue()).operator(AND).fuzziness(Fuzziness.TWO).prefixLength(2));
+		}
+		
+		BoolQueryBuilder bqb = QueryBuilders.boolQuery();
+		
+		for(int i = 0; i < searchModel.size(); i++){
+			if(searchModel.get(i).getOperator().equals("AND")){
+				bqb.must(qbList.get(i));
+			} else {
+				bqb.should(qbList.get(i));
+			}
+		}
+		
+		SearchQuery sq = new NativeSearchQuery(bqb);
+		
+		List<Ebook> returnBooks = operations.queryForList(sq, Ebook.class);
+		
+		return returnBooks;
 	}
 
 }

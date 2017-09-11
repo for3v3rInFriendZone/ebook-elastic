@@ -69,7 +69,7 @@ public class EbookController {
 	public ResponseEntity<List<Ebook>> searchBook(@RequestBody List<SearchDTO> searchModel) {
 		
 		
-		List<QueryBuilder> qbList = new ArrayList<QueryBuilder>();
+		/*List<QueryBuilder> qbList = new ArrayList<QueryBuilder>();
 		//QueryBuilder qb1 = QueryBuilders.simpleQueryStringQuery("{'field' : {'title' : 'steven'}}");
 		//QueryBuilder qb = QueryBuilders.boolQuery().must(qb1);
 		
@@ -94,7 +94,7 @@ public class EbookController {
 		SearchQuery sq = new NativeSearchQuery(bqb);
 		
 		List<Ebook> returnBooks = operations.queryForList(sq, Ebook.class);
-		System.out.println("Query---->  " + bqb.toString());
+		System.out.println("Query---->  " + bqb.toString());*/
 		//QueryBuilder qb2 = QueryBuilders.simpleQueryStringQuery("{'field' : {'title' : 'dark'}}");
 		
 		/*BoolQueryBuilder qb = QueryBuilders.boolQuery();
@@ -160,7 +160,7 @@ public class EbookController {
 		//books.forEach(returnBooks::add);
 		
 		*/
-		return new ResponseEntity<List<Ebook>>(returnBooks, HttpStatus.OK);
+		return new ResponseEntity<List<Ebook>>(ebookElastic.findByFields(searchModel), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")

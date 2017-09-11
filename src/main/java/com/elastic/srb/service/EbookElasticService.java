@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.elastic.srb.dto.SearchDTO;
 import com.elastic.srb.model.Ebook;
 import com.elastic.srb.model.Language;
 
@@ -27,4 +28,6 @@ public interface EbookElasticService {
     List<Ebook> findByLanguage(Language language);
     
     List<Ebook> findByText(String text);
+    
+    List<Ebook> findByFields (List<SearchDTO> searchModel);
 }
