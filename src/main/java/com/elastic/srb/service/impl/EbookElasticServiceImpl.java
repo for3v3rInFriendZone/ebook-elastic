@@ -26,14 +26,14 @@ import com.elastic.srb.repository.EbookRepository;
 import com.elastic.srb.service.EbookElasticService;
 
 @Service
-public class EbookElasticServiceImpl implements EbookElasticService{
+public class EbookElasticServiceImpl implements EbookElasticService {
 
 	@Autowired
 	private EbookElasticRepository bookElastic;
-	
+
 	@Autowired
 	ElasticsearchOperations operations;
-	
+
 	@Override
 	public Ebook save(Ebook book) {
 		// TODO Auto-generated method stub
@@ -78,12 +78,6 @@ public class EbookElasticServiceImpl implements EbookElasticService{
 	}
 
 	@Override
-	public List<Ebook> findByLanguage(Language language) {
-		// TODO Auto-generated method stub
-		return bookElastic.findByLanguage(language);
-	}
-
-	@Override
 	public List<Ebook> findByText(String text) {
 		// TODO Auto-generated method stub
 		return bookElastic.findByText(text);
@@ -91,28 +85,43 @@ public class EbookElasticServiceImpl implements EbookElasticService{
 
 	@Override
 	public List<Ebook> findByFields(List<SearchDTO> searchModel) {
-		
+
 		List<QueryBuilder> qbList = new ArrayList<QueryBuilder>();
-		
-		for(SearchDTO sdto : searchModel){
-			qbList.add(QueryBuilders.matchQuery(sdto.getField(), sdto.getValue()).operator(AND).fuzziness(Fuzziness.TWO).prefixLength(2));
+
+		for (SearchDTO sdto : searchModel) {
+			if (sdto.getLanguage().equals(Boolean.TRUE)) {
+				
+				qbList.add(
+						QueryBuilders.nestedQuery("language", QueryBuilders.matchQuery(sdto.getField(), sdto.getValue())
+								.operator(AND).fuzziness(Fuzziness.TWO).prefixLength(2)));
+			} else {
+				qbList.add(QueryBuilders.matchQuery(sdto.getField(), sdto.getValue()).operator(AND)
+						.fuzziness(Fuzziness.TWO).prefixLength(2));
+			}
+
 		}
-		
+
 		BoolQueryBuilder bqb = QueryBuilders.boolQuery();
-		
-		for(int i = 0; i < searchModel.size(); i++){
-			if(searchModel.get(i).getOperator().equals("AND")){
+
+		for (int i = 0; i < searchModel.size(); i++) {
+			if (searchModel.get(i).getOperator().equals("AND")) {
 				bqb.must(qbList.get(i));
 			} else {
 				bqb.should(qbList.get(i));
 			}
 		}
-		
+
 		SearchQuery sq = new NativeSearchQuery(bqb);
-		
+
 		List<Ebook> returnBooks = operations.queryForList(sq, Ebook.class);
-		
+
 		return returnBooks;
+	}
+
+	@Override
+	public Page<Ebook> findByLanguageName(String name, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return bookElastic.findByLanguageName(name, pageable);
 	}
 
 }

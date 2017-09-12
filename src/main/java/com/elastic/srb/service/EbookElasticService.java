@@ -1,13 +1,10 @@
 package com.elastic.srb.service;
 
-import java.io.IOException;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
 import com.elastic.srb.dto.SearchDTO;
 import com.elastic.srb.model.Ebook;
-import com.elastic.srb.model.Language;
 
 public interface EbookElasticService {
 
@@ -25,7 +22,7 @@ public interface EbookElasticService {
     
     List<Ebook> findByKeywords(String keyword);
     
-    List<Ebook> findByLanguage(Language language);
+    Page<Ebook> findByLanguageName(String name, Pageable pageable);
     
     List<Ebook> findByText(String text);
     

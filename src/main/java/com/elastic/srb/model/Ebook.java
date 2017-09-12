@@ -45,7 +45,7 @@ public class Ebook implements Serializable {
 	private String text;
 
 	@Column(name = "PUBLICATION_YEAR")
-	private Integer publication_year;
+	private String publication_year;
 
 	@Column(name = "PROFILE_IMAGE", length = 10485760)
 	private String image;
@@ -73,7 +73,7 @@ public class Ebook implements Serializable {
 
 	}
 
-	public Ebook(String title, String author, String keywords, String image, Integer publication_year, String filename,
+	public Ebook(String title, String author, String keywords, String image, String publication_year, String filename,
 			String mimeBook) {
 		super();
 		this.title = title;
@@ -134,11 +134,11 @@ public class Ebook implements Serializable {
 		this.keywords = keywords;
 	}
 
-	public Integer getPublication_year() {
+	public String getPublication_year() {
 		return publication_year;
 	}
 
-	public void setPublication_year(Integer publication_year) {
+	public void setPublication_year(String publication_year) {
 		this.publication_year = publication_year;
 	}
 

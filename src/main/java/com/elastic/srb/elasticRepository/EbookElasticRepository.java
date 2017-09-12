@@ -5,9 +5,12 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import org.springframework.stereotype.Repository;
+
 import com.elastic.srb.model.Ebook;
 import com.elastic.srb.model.Language;
 
+@Repository
 public interface EbookElasticRepository extends ElasticsearchRepository<Ebook, Long>{
 	
     List<Ebook> findByTitle(String title);
@@ -18,6 +21,6 @@ public interface EbookElasticRepository extends ElasticsearchRepository<Ebook, L
     
     List<Ebook> findByText(String text);
     
-    List<Ebook> findByLanguage(Language language);
+    Page<Ebook> findByLanguageName(String name, Pageable pageable);
     
 }

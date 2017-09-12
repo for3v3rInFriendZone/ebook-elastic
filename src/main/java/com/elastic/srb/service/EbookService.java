@@ -2,6 +2,8 @@ package com.elastic.srb.service;
 
 import java.io.IOException;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.elastic.srb.model.Ebook;
 
 public interface EbookService {
@@ -19,5 +21,7 @@ public interface EbookService {
 	public void delete(Ebook ebook);
 	
 	public void deleteAll();
+	
+	public Ebook uploadPDF(MultipartFile pdf);
 	
 }

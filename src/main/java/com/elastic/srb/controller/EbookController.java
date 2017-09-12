@@ -14,6 +14,8 @@ import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
@@ -26,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 import static org.elasticsearch.index.query.MatchQueryBuilder.Operator.AND;
 
@@ -67,6 +71,8 @@ public class EbookController {
 	
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public ResponseEntity<List<Ebook>> searchBook(@RequestBody List<SearchDTO> searchModel) {
+		
+		return new ResponseEntity<List<Ebook>>(ebookElastic.findByFields(searchModel), HttpStatus.OK);
 		
 		
 		/*List<QueryBuilder> qbList = new ArrayList<QueryBuilder>();
@@ -160,7 +166,13 @@ public class EbookController {
 		//books.forEach(returnBooks::add);
 		
 		*/
-		return new ResponseEntity<List<Ebook>>(ebookElastic.findByFields(searchModel), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	public ResponseEntity<Ebook> uploadPdf(@RequestParam(value = "file") MultipartFile pdf) throws IOException {
+		
+		Ebook newBook = ebookSer.uploadPDF(pdf);
+		return new ResponseEntity<Ebook>(newBook, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
@@ -175,5 +187,12 @@ public class EbookController {
 
 		ebookElastic.delete(ebookElastic.findOne(id));
 		return new ResponseEntity<Ebook>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/lang/{value}", method = RequestMethod.GET)
+	public ResponseEntity<List<Ebook>> test(@PathVariable String value) throws IOException {
+
+		Page<Ebook> response = ebookElastic.findByLanguageName(value, new PageRequest(1, 20));
+		return new ResponseEntity<List<Ebook>>(response.getContent(), HttpStatus.OK);
 	}
 }
