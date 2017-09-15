@@ -89,7 +89,7 @@
 		                    </tbody>
 		                    -->
 		                    <tbody>
-		                    	<tr ng-repeat="book in bsc.searchResults | orderBy: 'id'">
+		                    	<tr ng-repeat="book in bsc.searchResults">
 		                    		<td>
 		                    			<div align=center>
 		                    				<a ng-click="bsc.goToDetails(book.id)">{{book.title}}</a> &nbsp by &nbsp <i> {{book.author}} </i>
