@@ -34,6 +34,9 @@
 			},
 			upload: function(file) {
 				return Restangular.all('book/upload').post(file);
+			},
+			search: function(booksDTO) {
+				return Restangular.all('book/search').post(booksDTO);
 			}
 		};
 	}

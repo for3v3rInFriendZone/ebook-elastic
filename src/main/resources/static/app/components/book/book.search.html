@@ -17,7 +17,9 @@
 				                <div class="col-sm-8 col-sm-offset-3"> 				           
 				                  <label for="title" class="col-sm-1 control-label" >By title: </label>
 				                  <div class="col-sm-8">
-						    			<input class="col-sm-offset-1 form-control" type="text" ng-model="bsc.book.title" id="title" name="title" />					    			
+						    			<input class="col-sm-offset-1 form-control" type="text" ng-model="bsc.bookDTOTitle.value" id="title" name="title" />
+						    			<select class="col-sm-offset-1" name="chooseCategory" ng-options="operator as operator for operator in bsc.operators" ng-model="bsc.bookDTOTitle.operator" >
+										 </select>					    			
 						    	  </div>
 						    	</div>
 				              </div>
@@ -25,7 +27,9 @@
 				                <div class="col-sm-8 col-sm-offset-3"> 				           
 				                  <label for="author" class="col-sm-1 control-label" >By author:</label>
 				                  <div class="col-sm-8">
-						    			<input class="col-sm-offset-1 form-control" type="text" ng-model="bsc.book.author" id="author" name="author"/>					    			
+						    			<input class="col-sm-offset-1 form-control" type="text" ng-model="bsc.bookDTOAuthor.value" id="author" name="author"/>
+						    			<select class="col-sm-offset-1" name="chooseCategory" ng-options="operator as operator for operator in bsc.operators" ng-model="bsc.bookDTOAuthor.operator" >
+										 </select>					    			
 						    	  </div>
 						    	</div>
 				              </div>
@@ -33,7 +37,9 @@
 				                <div class="col-sm-8 col-sm-offset-3"> 				           
 				                  <label for="keywords" class="col-sm-1 control-label" >By keywords:</label>
 				                  <div class="col-sm-8">
-						    			<input class="col-sm-offset-1 form-control" type="text" ng-model="bsc.book.keywords" id="keywords" name="keywords"/>					    			
+						    			<input class="col-sm-offset-1 form-control" type="text" ng-model="bsc.bookDTOKeywords.value" id="keywords" name="keywords"/>
+						    			<select class="col-sm-offset-1" name="chooseCategory" ng-options="operator as operator for operator in bsc.operators" ng-model="bsc.bookDTOKeywords.operator">
+										 </select>					    			
 						    	  </div>
 						    	</div>
 				              </div>
@@ -41,7 +47,9 @@
 				                <div class="col-sm-8 col-sm-offset-3"> 				           
 				                  <label for="content" class="col-sm-1 control-label" >By content:</label>
 				                  <div class="col-sm-8">
-						    			<textarea  style="resize: none; height: 105px;" class="col-sm-offset-1 form-control" type="text" ng-model="bsc.book.content" id="content" name="content">  </textarea>				    			
+						    			<textarea  style="resize: none; height: 105px;" class="col-sm-offset-1 form-control" type="text" ng-model="bsc.bookDTOText.value" id="content" name="content">  </textarea>
+						    			<select class="col-sm-offset-1" name="chooseCategory" ng-options="operator as operator for operator in bsc.operators" ng-model="bsc.bookDTOText.operator">
+										 </select>				    			
 						    	  </div>
 						    	</div>
 				              </div>
@@ -49,13 +57,49 @@
 				                <div class="col-sm-8 col-sm-offset-3"> 				           
 				                  <label for="language" class="col-sm-1 control-label" >By language:</label>
 				                  <div class="col-sm-8">
-						    			<input class="col-sm-offset-1 form-control" type="text" ng-model="bsc.book.language" id="language" name="language" required/>						    			
+						    			<input class="col-sm-offset-1 form-control" type="text" ng-model="bsc.bookDTOLanguage.value" id="language" name="language" required/>
+						    			<select class="col-sm-offset-1" name="chooseCategory" ng-options="operator as operator for operator in bsc.operators" ng-model="bsc.bookDTOLanguage.operator">
+										 </select>						    			
 						    	  </div>
 						    	</div>
 				              </div>			             			                
 		                </form>
 		                
-		                <p ng-if="bsc.searchResults.length != 0"> {{bsc.searchResults}} </p>
+		                <div ng-if="bsc.searchResults != null && bsc.searchResults.length != 0">
+		                	<table class="table table-hover table-user-information">
+		                  	<!--  <thead>
+		                  		<th>Title</th>
+		                  		<th>Author</th>
+		                  		<th>Keywords</th>
+		                  		<th>Publication year</th>
+		                  		<th>Category</th>
+		                  		<th>Language</th>
+		                  		<th>User</th>
+		                  	</thead>
+		                    <tbody>
+		                      <tr ng-repeat="book in blc.books | orderBy: 'id'">
+		                        <td ng-click="blc.editBook(book.id)"> {{book.title}} </td>
+		                        <td ng-click="blc.editBook(book.id)"> {{book.author}} </td>
+		                        <td ng-click="blc.editBook(book.id)"> {{book.keywords}} </td>
+		                        <td ng-click="blc.editBook(book.id)"> {{book.publication_year}} </td>  
+		                        <td ng-click="blc.editBook(book.id)"> {{book.category.name}} </td>
+		                        <td ng-click="blc.editBook(book.id)"> {{book.language.name}} </td>  
+		                        <td ng-click="blc.editBook(book.id)"> {{book.user.firstname}} &nbsp {{book.user.lastname}} </td>                    
+		                      </tr>                    
+		                    </tbody>
+		                    -->
+		                    <tbody>
+		                    	<tr ng-repeat="book in bsc.searchResults | orderBy: 'id'">
+		                    		<td>
+		                    			<div align=center>
+		                    				<a ng-click="bsc.goToDetails(book.id)">{{book.title}}</a> &nbsp by &nbsp <i> {{book.author}} </i>
+		                    			</div> 
+		                    		</td>
+		                    	</tr>
+		                    </tbody>
+		                  </table>
+		                </div>
+
 		                <div ng-if="bsc.searchResults.length == 0">
 		                  	<img class="img-responsive col-sm-offset-5" alt="User Pic" src="https://cdn4.iconfinder.com/data/icons/emoticons-outline/512/21-512.png"  width="110" height="190"/>
 		                  	<br/>
@@ -66,7 +110,7 @@
            			<div class="panel-footer">
                         <div class="text-center">                          
                             <button type="button" ng-click="bsc.cancel()" class="btn btn-sm btn-info data-toggle="tooltip" data-placement="bottom" title="Cancel"><i class="fa fa-arrow-left"></i></button>                      
-                            <button type="button" ng-click="bsc.search()" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Save category"><i class="fa fa-search"></i></button>                    
+                            <button type="button" ng-click="bsc.search()" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Search book"><i class="fa fa-search"></i></button>                    
                         </div>
                     </div>
 		        </div>

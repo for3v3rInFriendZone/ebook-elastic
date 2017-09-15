@@ -88,7 +88,7 @@ public class EbookElasticServiceImpl implements EbookElasticService {
 
 		List<QueryBuilder> qbList = new ArrayList<QueryBuilder>();
 
-		for (SearchDTO sdto : searchModel) {
+		/*for (SearchDTO sdto : searchModel) {
 			if (sdto.getLanguage().equals(Boolean.TRUE)) {
 				
 				qbList.add(
@@ -99,8 +99,13 @@ public class EbookElasticServiceImpl implements EbookElasticService {
 						.fuzziness(Fuzziness.TWO).prefixLength(2));
 			}
 
-		}
+		}*/
 
+		for (SearchDTO sdto : searchModel) {
+			qbList.add(QueryBuilders.matchQuery(sdto.getField(), sdto.getValue()).operator(AND)
+					.fuzziness(Fuzziness.TWO).prefixLength(2));
+		}
+		
 		BoolQueryBuilder bqb = QueryBuilders.boolQuery();
 
 		for (int i = 0; i < searchModel.size(); i++) {
