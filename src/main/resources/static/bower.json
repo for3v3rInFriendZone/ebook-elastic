@@ -1,0 +1,25 @@
+{
+  "name": "company-registry",
+  "version": "0.0.0",
+  "authors": [
+    "Marko Strisko <strile93@gmail.com>"
+  ],
+  "description": "This web application represents an e-book repository with books to search.",
+  "main": "index.html",
+  "keywords": [
+    "books",
+    "search"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "angular": "^1.6.1",
+    "angular-resource": "^1.6.1",
+    "angular-messages": "^1.6.1",
+    "angular-ui-router": "^0.3.1",
+    "angular-animate": "^1.5.8",
+    "angular-bootstrap": "^2.1.4",
+    "angular-local-storage": "^0.5.2",
+    "angular-fancy-modal": "^0.1.4",
+    "restangular": "^1.6.1"
+  }
+}

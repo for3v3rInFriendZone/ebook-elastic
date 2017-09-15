@@ -21,6 +21,7 @@ import org.xml.sax.SAXException;
 
 import com.elastic.srb.model.Ebook;
 import com.elastic.srb.repository.EbookRepository;
+import com.elastic.srb.service.EbookElasticService;
 import com.elastic.srb.service.EbookService;
 
 @Service
@@ -28,9 +29,13 @@ public class EbookServiceImpl implements EbookService {
 
 	@Autowired
 	EbookRepository ebookRep;
+	
+	@Autowired
+	EbookElasticService ebookElastic;
+	
 
 	@Override
-	public Ebook save(Ebook ebook) throws IOException {
+	public Ebook save(Ebook ebook) {
 		// TODO Auto-generated method stub
 		return ebookRep.save(ebook);
 	}
@@ -38,7 +43,21 @@ public class EbookServiceImpl implements EbookService {
 	@Override
 	public Ebook update(Long id, Ebook ebook) {
 		// TODO Auto-generated method stub
-		return ebookRep.save(ebook);
+		Ebook editedBook = ebookElastic.findOne(id);
+		
+		editedBook.setAuthor(ebook.getAuthor());
+		editedBook.setCategory(ebook.getCategory());
+		editedBook.setFilename(ebook.getFilename());
+		editedBook.setImage(ebook.getImage());
+		editedBook.setKeywords(ebook.getKeywords());
+		editedBook.setLanguage(ebook.getLanguage());
+		editedBook.setMimeBook(ebook.getMimeBook());
+		editedBook.setPublication_year(ebook.getPublication_year());
+		editedBook.setText(ebook.getText());
+		editedBook.setTitle(ebook.getTitle());
+		editedBook.setUser(ebook.getUser());
+		
+		return ebookElastic.save(save(editedBook));
 	}
 
 	@Override

@@ -1,0 +1,62 @@
+
+<!-- Header -->
+<section style="background-color: gray;">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-10 col-sm-offset-1 toppad">
+				<br/><br/><br/><br/>
+				<div class="panel panel-info">
+		            <div class="panel-heading text-center">
+		              <h3 class="panel-title"> {{bcr.book.title}} </h3>
+		            </div>
+		            <div class="panel-body">
+		              <div class="row">
+		              	<form class="state-form form-horizontal text-center" name="bcr.form" novalidate>
+		              		<div class="form-group">
+				                <div class="col-sm-8 col-sm-offset-2"> 				           
+				                   <img class="img-responsive col-sm-offset-5" alt="User Pic" src="{{bcr.book.image}}"  width="110" height="110"/>
+				                  <br/>
+				                  <table class="table table-user-information">
+				                    <tbody>
+				                      <tr>
+				                        <td> <b>Title: </b> </td>
+				                        <td>{{bcr.book.title}}</td>
+				                      </tr>
+				                      <tr>
+				                        <td><b>Author: </b></td>
+				                        <td>{{bcr.book.author}}</td>
+				                      </tr>
+				                      <tr>
+				                        <td><b>Keywords: </b></td>
+				                        <td>{{bcr.book.keywords}}</td>	                       
+				                      </tr>	                    
+				                      <tr>
+				                        <td><b>Publication year: </b></td>
+				                        <td>{{bcr.book.publication_year}}</td>
+				                      </tr>
+				                      <tr>
+				                        <td><b>Category: </b></td>
+				                        <td>{{bcr.book.category.name}}</td>
+				                      </tr>
+				                      <tr>
+				                        <td><b>Language: </b></td>
+				                        <td>{{bcr.book.language.name}}</td>
+				                      </tr>			                   
+				                    </tbody>
+		                  		  </table>
+						    	</div>
+				            </div>	              				            			             			                
+		                </form>
+		              </div>		           
+           			</div>
+           			<div class="panel-footer">
+                        <div class="text-center">                          
+                            <button type="button" ng-click="bcr.cancel()" class="btn btn-sm btn-info data-toggle="tooltip" data-placement="bottom" title="Cancel"><i class="fa fa-arrow-left"></i></button>                      
+                        </div>
+                    </div>
+		        </div>
+			</div>
+		</div>
+	</div>
+</section>
+

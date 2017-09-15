@@ -1,0 +1,25 @@
+<div class="modal-header">
+	<h2 class="text-center" style="color: lightblue;"> Change password </h2>
+</div>
+<div class="modal-body">
+	<form class="state-form form-horizontal text-center" name="ucr.modalForm" novalidate>
+		<table class="table table-hover">
+			<tbody class="text-center">
+				<tr>
+					<td> <b>New password:</b> </td>
+					<td> <input type="password" class="form-control" ng-model="ucr.newPassword" required/> </td> 
+				</tr>
+				<tr>
+					<td> <b>Retype password:</b> </td>
+					<td> <input type="password" class="form-control" ng-model="ucr.rePass" required/> </td> 
+				</tr>			
+			</tbody>
+		</table>
+		<p class="text-center" ng-show="ucr.notEqualPass" style="color: red;"> Passwords are not the same. </p>
+	</form>
+<div class="modal-footer">
+	<div class="text-center">
+		<button class="btn btn-success" ng-click="ucr.savePass()"> <i class="fa fa-check"></i></button>
+		<button class="btn btn-danger" ng-click="ucr.closeModal()"> <i class="fa fa-ban"></i></button>
+	</div>
+</div>

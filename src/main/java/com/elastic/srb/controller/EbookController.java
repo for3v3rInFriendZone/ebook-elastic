@@ -175,6 +175,12 @@ public class EbookController {
 		return new ResponseEntity<Ebook>(newBook, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Ebook> editBook(@PathVariable("id") Long id, @RequestBody Ebook ebook) throws IOException {
+
+		return new ResponseEntity<Ebook>(ebookSer.update(id, ebook), HttpStatus.OK);
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<Ebook> saveBook(@RequestBody Ebook ebook) throws IOException {
 		
@@ -185,7 +191,8 @@ public class EbookController {
 	@RequestMapping(value="/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Ebook> deleteBook(@PathVariable Long id) {
 
-		ebookElastic.delete(ebookElastic.findOne(id));
+		//ebookElastic.delete(ebookElastic.findOne(id));
+		ebookElastic.deleteAll();
 		return new ResponseEntity<Ebook>(HttpStatus.OK);
 	}
 	

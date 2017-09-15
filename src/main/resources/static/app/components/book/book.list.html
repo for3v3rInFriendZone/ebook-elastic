@@ -1,0 +1,59 @@
+
+<!-- Header -->
+<section style="background-color: gray;">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-10 col-sm-offset-1 toppad">
+				<br/><br/><br/><br/>
+				<div class="panel panel-info">
+		            <div class="panel-heading text-center">
+		              <h3 class="panel-title">List of books</h3>
+		            </div>
+		            <div class="panel-body">
+		              <div class="row">	  
+		                <div class="col-md-6 col-md-offset-3"> 
+		                  <table class="table table-hover table-user-information">
+		                  	<!--  <thead>
+		                  		<th>Title</th>
+		                  		<th>Author</th>
+		                  		<th>Keywords</th>
+		                  		<th>Publication year</th>
+		                  		<th>Category</th>
+		                  		<th>Language</th>
+		                  		<th>User</th>
+		                  	</thead>
+		                    <tbody>
+		                      <tr ng-repeat="book in blc.books | orderBy: 'id'">
+		                        <td ng-click="blc.editBook(book.id)"> {{book.title}} </td>
+		                        <td ng-click="blc.editBook(book.id)"> {{book.author}} </td>
+		                        <td ng-click="blc.editBook(book.id)"> {{book.keywords}} </td>
+		                        <td ng-click="blc.editBook(book.id)"> {{book.publication_year}} </td>  
+		                        <td ng-click="blc.editBook(book.id)"> {{book.category.name}} </td>
+		                        <td ng-click="blc.editBook(book.id)"> {{book.language.name}} </td>  
+		                        <td ng-click="blc.editBook(book.id)"> {{book.user.firstname}} &nbsp {{book.user.lastname}} </td>                    
+		                      </tr>                    
+		                    </tbody>
+		                    -->
+		                    <tbody>
+		                    	<tr ng-repeat="book in blc.books | orderBy: 'id'">
+		                    		<td ng-click="blc.editBook(book.id)">
+		                    			<img class="img-responsive col-sm-offset-5" alt="User Pic" src="{{book.image}}"  width="110" height="190"/>
+		                    			<a ng-click="blc.editBook(book.id)">{{book.title}}</a> &nbsp by &nbsp <i> {{book.author}} </i> 
+		                    		</td>
+		                    	</tr>
+		                    </tbody>
+		                  </table>
+		                </div>
+		              </div>
+           			</div>
+           			<div class="panel-footer">
+                        <div class="text-center">                               
+                            <button type="button" ng-show="blc.user.type == 'admin'" ng-click="blc.newBook()" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="New book"><i class="fa fa-plus" style="font-size: 24px;"></i></button>                    
+                            <button type="button" ng-click="blc.searchBook()" class="btn btn-sm btn-warning" data-toggle="tooltip" data-placement="bottom" title="Search books"><i class="fa fa-search" style="font-size: 24px;"></i></button>
+                        </div>
+                    </div>
+		        </div>
+			</div>
+		</div>
+	</div>
+</section>

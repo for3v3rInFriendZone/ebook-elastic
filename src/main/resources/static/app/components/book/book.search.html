@@ -1,0 +1,77 @@
+
+<!-- Header -->
+<section style="background-color: gray;">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-10 col-sm-offset-1 toppad">
+				<br/><br/><br/><br/>
+				<div class="panel panel-info">
+		            <div class="panel-heading text-center">
+		              <h3 class="panel-title"> Search books </h3>
+		            </div>
+		            <div class="panel-body">
+		              <div class="row">
+		              	<form class="state-form form-horizontal text-center" name="bsc.form" novalidate>
+		              		              		       
+			                <div class="form-group">
+				                <div class="col-sm-8 col-sm-offset-3"> 				           
+				                  <label for="title" class="col-sm-1 control-label" >By title: </label>
+				                  <div class="col-sm-8">
+						    			<input class="col-sm-offset-1 form-control" type="text" ng-model="bsc.book.title" id="title" name="title" />					    			
+						    	  </div>
+						    	</div>
+				              </div>
+				              <div class="form-group">
+				                <div class="col-sm-8 col-sm-offset-3"> 				           
+				                  <label for="author" class="col-sm-1 control-label" >By author:</label>
+				                  <div class="col-sm-8">
+						    			<input class="col-sm-offset-1 form-control" type="text" ng-model="bsc.book.author" id="author" name="author"/>					    			
+						    	  </div>
+						    	</div>
+				              </div>
+				              <div class="form-group">
+				                <div class="col-sm-8 col-sm-offset-3"> 				           
+				                  <label for="keywords" class="col-sm-1 control-label" >By keywords:</label>
+				                  <div class="col-sm-8">
+						    			<input class="col-sm-offset-1 form-control" type="text" ng-model="bsc.book.keywords" id="keywords" name="keywords"/>					    			
+						    	  </div>
+						    	</div>
+				              </div>
+				              <div class="form-group">
+				                <div class="col-sm-8 col-sm-offset-3"> 				           
+				                  <label for="content" class="col-sm-1 control-label" >By content:</label>
+				                  <div class="col-sm-8">
+						    			<textarea  style="resize: none; height: 105px;" class="col-sm-offset-1 form-control" type="text" ng-model="bsc.book.content" id="content" name="content">  </textarea>				    			
+						    	  </div>
+						    	</div>
+				              </div>
+				              <div class="form-group">
+				                <div class="col-sm-8 col-sm-offset-3"> 				           
+				                  <label for="language" class="col-sm-1 control-label" >By language:</label>
+				                  <div class="col-sm-8">
+						    			<input class="col-sm-offset-1 form-control" type="text" ng-model="bsc.book.language" id="language" name="language" required/>						    			
+						    	  </div>
+						    	</div>
+				              </div>			             			                
+		                </form>
+		                
+		                <p ng-if="bsc.searchResults.length != 0"> {{bsc.searchResults}} </p>
+		                <div ng-if="bsc.searchResults.length == 0">
+		                  	<img class="img-responsive col-sm-offset-5" alt="User Pic" src="https://cdn4.iconfinder.com/data/icons/emoticons-outline/512/21-512.png"  width="110" height="190"/>
+		                  	<br/>
+		                    <p class="text-center" style="color: blue;"> Soory, no books matches your search.</p>
+		                </div>
+		              </div>		           
+           			</div>
+           			<div class="panel-footer">
+                        <div class="text-center">                          
+                            <button type="button" ng-click="bsc.cancel()" class="btn btn-sm btn-info data-toggle="tooltip" data-placement="bottom" title="Cancel"><i class="fa fa-arrow-left"></i></button>                      
+                            <button type="button" ng-click="bsc.search()" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Save category"><i class="fa fa-search"></i></button>                    
+                        </div>
+                    </div>
+		        </div>
+			</div>
+		</div>
+	</div>
+</section>
+

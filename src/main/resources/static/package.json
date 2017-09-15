@@ -1,0 +1,26 @@
+{
+  "name": "ebook",
+  "version": "1.0.0",
+  "description": "Ebook repository and search mechanisms.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ebook",
+    "search",
+    "elasticsearch",
+    "lucene"
+  ],
+  "author": "Marko Strisko",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.6.6",
+    "angular-animate": "^1.6.6",
+    "angular-bootstrap": "^0.12.2",
+    "angular-local-storage": "^0.7.1",
+    "angular-ui-router": "^0.3.1",
+    "ng-file-upload": "^12.2.13",
+    "restangular": "^1.6.1"
+  }
+}

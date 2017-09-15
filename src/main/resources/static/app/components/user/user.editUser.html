@@ -1,0 +1,76 @@
+
+<!-- Header -->
+<section style="background-color: gray;">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-10 col-sm-offset-1 toppad">
+				<br/><br/><br/><br/>
+				<div class="panel panel-info">
+		            <div class="panel-heading text-center">
+		              <h3 class="panel-title">{{uec.nameAndSurname}}</h3>
+		            </div>
+		            <div class="panel-body">
+		              <div class="row">
+		              	<form class="state-form form-horizontal text-center" name="uec.form" novalidate>
+			                <div class="form-group">
+				                <div class="col-sm-8 col-sm-offset-2"> 
+				                  <img class="img-responsive img-circle col-sm-offset-5" alt="User Pic" src="{{uec.user.image}}"  width="110" height="110"/>
+				                  <br/>
+				                  <table class="table table-user-information">
+				                    <tbody>
+				                      <tr>
+				                        <td> <b>Firstname: </b> </td>
+				                        <td ng-class="{'has-error': uec.form.firstname.$error.required && uec.submitted}"><input type="text" name="firstname" class="form-control" ng-model="uec.user.firstname" required/>
+				                        	<p class="text-center" ng-show="uec.form.firstname.$error.required && uec.submitted" style="color: red; font-size: 14px;">Firstname is required.</p>
+				                        </td>
+				                      </tr>
+				                      <tr>
+				                        <td><b>Lastname: </b></td>
+				                        <td ng-class="{'has-error': uec.form.lastname.$error.required && uec.submitted}"><input type="text" name="lastname" class="form-control" ng-model="uec.user.lastname" required/>
+				                        	<p class="text-center" ng-show="uec.form.lastname.$error.required && uec.submitted" style="color: red; font-size: 14px;">Lastname is required.</p>
+				                        </td>
+				                      </tr>
+				                      <tr>
+				                        <td><b>Username: </b></td>
+				                        <td>{{uec.user.username}}</td>	                       
+				                      </tr>
+				                      <tr>
+				                        <td><b>Password: </b></td>
+				                        <td> <button type="button" ng-click="uec.newPass()" class="btn btn-sm btn-warning" data-toggle="tooltip" data-placement="bottom" title="New password"><i class="fa fa-pencil"></i></button></td> 
+				                      </tr>	                    
+				                       <tr>
+				                        <td><b>Type: </b></td>
+				                        <td>{{uec.user.type}}</td>
+				                      </tr>
+				                      <tr>
+				                        <td> <b>Image: </b></td>
+				                        <td> 
+				                        	<input class="btn btn-info" type="file" imageread="uec.user.image"/>
+				                        	<p class="text-center" ng-show="uec.notAnImage" style="color: red; font-size: 14px;">You did not upload an image.</p>
+										</td>
+				                      </tr>
+				                        <td><b>Category: </b></td>
+				                        <td> <select class="form-control" name="chooseCategory" ng-options="category.name for category in uec.categories track by category.name" ng-model="uec.user.category">
+											 </select> 
+										</td>
+				                      </tr>
+				                    </tbody>
+		                  		</table>
+						    	</div>
+				              </div>			           		                
+		                </form>
+		              </div>
+           			</div>
+           			<div class="panel-footer">
+                        <div class="text-center">   
+                        	<button type="button" ng-click="uec.cancel()" class="btn btn-sm btn-info data-toggle="tooltip" data-placement="bottom" title="Cancel"><i class="fa fa-arrow-left"></i></button>                      
+                            <button type="button" ng-click="uec.done()" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Save"><i class="fa fa-check"></i></button>                    
+                            <button ng-show="uec.currentState == 'main.usersEdit'" type="button" ng-click="uec.remove()" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="bottom" title="Remove user"><i class="fa fa-trash-o"></i></button>
+                        </div>
+                        
+                    </div>
+		        </div>
+			</div>
+		</div>
+	</div>
+</section>

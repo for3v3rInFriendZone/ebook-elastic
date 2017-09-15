@@ -1,0 +1,47 @@
+
+<!-- Header -->
+<section style="background-color: gray;">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-10 col-sm-offset-1 toppad">
+				<br/><br/><br/><br/>
+				<div class="panel panel-info">
+		            <div class="panel-heading text-center">
+		              <h3 class="panel-title"> {{ccr.title}} </h3>
+		            </div>
+		            <div class="panel-body">
+		              <div class="row">
+		              	<form class="state-form form-horizontal text-center" name="ccr.form" novalidate>
+			                <div class="form-group">
+				                <div class="col-sm-8 col-sm-offset-3"> 				           
+				                  <img class="img-responsive img-circle col-sm-offset-3" alt="User Pic" src="http://www.popularcategories.com/images/categories.jpg"  width="150px" height="150px"/>
+				                  <br/>
+				                  <hr/>
+				                  <label for="name" class="col-sm-1 control-label" >Name:</label>
+				                  <div class="col-sm-8">
+						    			<div ng-class="{'has-error': ccr.form.name.$error.required && ccr.submitted}">
+						    			 	<input class="col-sm-offset-1 form-control" type="text" ng-model="ccr.category.name" id="name" name="name" required/>
+						    			</div>
+						    			<hr ng-show="ccr.anotherCategoryFlag"/>
+						    			<p class="text-center" ng-show="ccr.anotherCategoryFlag" style="color: red; font-size: 14px;">This category is being used by book or user. If you realy want to remove it, please go to that users and switch to another category.</p>
+						    			<p class="text-center" ng-show="ccr.form.name.$error.required && ccr.submitted" style="color: red; font-size: 14px;">Name is required.</p>
+						    			<hr ng-show="ccr.anotherCategoryFlag"/>
+						    	  </div>
+						    	</div>
+				              </div>			             			                
+		                </form>
+		              </div>		           
+           			</div>
+           			<div class="panel-footer">
+                        <div class="text-center">                          
+                            <button type="button" ng-click="ccr.cancel()" class="btn btn-sm btn-info data-toggle="tooltip" data-placement="bottom" title="Cancel"><i class="fa fa-arrow-left"></i></button>                      
+                            <button type="button" ng-click="ccr.done()" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Save category"><i class="fa fa-check"></i></button>                    
+                            <button ng-show="ccr.currentState == 'main.editCategory'" type="button" ng-click="ccr.remove()" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="bottom" title="Remove category"><i class="fa fa-trash-o"></i></button>
+                        </div>
+                    </div>
+		        </div>
+			</div>
+		</div>
+	</div>
+</section>
+

@@ -1,0 +1,128 @@
+
+<!-- Header -->
+<section style="background-color: gray;">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-10 col-sm-offset-1 toppad">
+				<br/><br/><br/><br/>
+				<div class="panel panel-info">
+		            <div class="panel-heading text-center">
+		              <h3 class="panel-title"> {{bcr.title}} </h3>
+		            </div>
+		            <div class="panel-body">
+		              <div class="row">
+		              	<form class="state-form form-horizontal text-center" name="bcr.form" novalidate>
+		              		<div class="form-group">
+				                <div class="col-sm-8 col-sm-offset-3"> 				           
+				                  <img ng-show="bcr.book.image" class="img-responsive col-sm-offset-3" alt="User Pic" src={{bcr.book.image}}  width="150px" height="150px"/>
+				                  <img ng-show="!bcr.book.image" class="img-responsive img-circle col-sm-offset-3" alt="User Pic" src="http://psicoterapeutas.eu/imagenes-psicoterapeutas-eu/Photoxpress_4839887.jpg"  width="150px" height="150px"/>
+			              		  <br/>
+					              <hr/>
+						    	</div>
+				            </div>	              		
+		              		<div class="form-group" ng-if="bcr.currentState != 'main.editBook'">
+				                <div class="col-sm-8 col-sm-offset-3">
+				                	<label for="author" class="col-sm-1 control-label" >Upload book:</label>
+				                	 <div class="col-sm-8 col-sm-offset-1">
+				                	 	<button class="btn btn-info" ngf-select="upload($file)">Upload book</button>
+				                	 	<p class="text-center" ng-show="bcr.notAPdf" style="color: red; font-size: 14px;">You did not upload a pdf file.</p>
+				                	 </div> 			                  		    
+						    	</div>
+						    </div>
+			                <div class="form-group">
+				                <div class="col-sm-8 col-sm-offset-3"> 				           
+				                  <label for="title" class="col-sm-1 control-label" >Title: </label>
+				                  <div class="col-sm-8">
+						    			<div ng-class="{'has-error': bcr.form.title.$error.required && bcr.submitted}">
+						    			 	<input class="col-sm-offset-1 form-control" type="text" ng-model="bcr.book.title" id="title" name="title" required/>
+						    			</div>				    						
+						    			<p class="text-center" ng-show="bcr.form.title.$error.required && bcr.submitted" style="color: red; font-size: 14px;">Title is required.</p>					    			
+						    	  </div>
+						    	</div>
+				              </div>
+				              <div class="form-group">
+				                <div class="col-sm-8 col-sm-offset-3"> 				           
+				                  <label for="author" class="col-sm-1 control-label" >Author:</label>
+				                  <div class="col-sm-8">
+						    			<input class="col-sm-offset-1 form-control" type="text" ng-model="bcr.book.author" id="author" name="author"/>					    			
+						    	  </div>
+						    	</div>
+				              </div>
+				              <div class="form-group">
+				                <div class="col-sm-8 col-sm-offset-3"> 				           
+				                  <label for="keywords" class="col-sm-1 control-label" >Keywords:</label>
+				                  <div class="col-sm-8">
+						    			<input class="col-sm-offset-1 form-control" type="text" ng-model="bcr.book.keywords" id="keywords" name="keywords"/>					    			
+						    	  </div>
+						    	</div>
+				              </div>
+				              <div class="form-group">
+				                <div class="col-sm-8 col-sm-offset-3"> 				           
+				                  <label for="publication_year" class="col-sm-1 control-label" >Publication year:</label>
+				                  <div class="col-sm-8">
+						    			<input class="col-sm-offset-1 form-control" type="text" ng-model="bcr.book.publication_year" id="publication_year" name="publication_year"/>					    			
+						    	  </div>
+						    	</div>
+				              </div>
+				              <!--  <div class="form-group">
+				                <div class="col-sm-8 col-sm-offset-3"> 				           
+				                  <label for="filename" class="col-sm-1 control-label" >Filename:</label>
+				                  <div class="col-sm-8">
+						    			<div ng-class="{'has-error': bcr.form.filename.$error.required && bcr.submitted}">
+						    			 	<input class="col-sm-offset-1 form-control" type="text" ng-model="bcr.book.filename" id="filename" name="filename" required/>
+						    			</div>				    						
+						    			<p class="text-center" ng-show="bcr.form.filename.$error.required && bcr.submitted" style="color: red; font-size: 14px;">Filename is required.</p>					    			
+						    	  </div>
+						    	</div>
+				              </div>-->
+				              <div class="form-group">
+				                <div class="col-sm-8 col-sm-offset-3"> 				           
+				                  <label for="image" class="col-sm-1 control-label" >Image:</label>
+				                  <div class="col-sm-8">
+						    			 <input class="col-sm-offset-1 form-control" type="text" ng-model="bcr.book.image" id="image" name="image"/>				    			
+						    	  </div>
+						    	</div>
+				              </div>
+				              <div class="form-group">
+				                <div class="col-sm-8 col-sm-offset-3"> 			                  
+				                  <label for="chooseCategory" class="col-sm-1 control-label" >Category:</label>
+				                  <div class="col-sm-8">									    			
+						    			 <select class="form-control col-sm-offset-1" name="chooseCategory" ng-options="category.name for category in bcr.categories track by category.name" ng-model="bcr.book.category">
+										 </select>				    
+						    	  </div>
+						    	</div>
+				              </div>
+				               <div class="form-group">
+				                <div class="col-sm-8 col-sm-offset-3"> 			                  
+				                  <label for="chooseLanguage" class="col-sm-1 control-label" >Language:</label>
+				                  <div class="col-sm-8">									    			
+						    			 <select class="form-control col-sm-offset-1" name="chooseLanguage" ng-options="lang.name for lang in bcr.languages track by lang.name" ng-model="bcr.book.language">
+										 </select>				    
+						    	  </div>
+						    	</div>
+				              </div>
+				               <div class="form-group">
+				                <div class="col-sm-8 col-sm-offset-3"> 			                  
+				                  <label for="chooseUser" class="col-sm-1 control-label" >User:</label>
+				                  <div class="col-sm-8">									    			
+						    			 <select class="form-control col-sm-offset-1" name="chooseUser" ng-options="user.username for user in bcr.users track by user.username" ng-model="bcr.book.user">
+										 </select>				    
+						    	  </div>
+						    	</div>
+				              </div>			             			                
+		                </form>
+		              </div>		           
+           			</div>
+           			<div class="panel-footer">
+                        <div class="text-center">                          
+                            <button type="button" ng-click="bcr.cancel()" class="btn btn-sm btn-info data-toggle="tooltip" data-placement="bottom" title="Cancel"><i class="fa fa-arrow-left"></i></button>                      
+                            <button type="button" ng-click="bcr.done()" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Save category"><i class="fa fa-check"></i></button>                    
+                            <button ng-show="bcr.currentState == 'main.editBook'" type="button" ng-click="bcr.remove()" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="bottom" title="Remove category"><i class="fa fa-trash-o"></i></button>
+                        </div>
+                    </div>
+		        </div>
+			</div>
+		</div>
+	</div>
+</section>
+

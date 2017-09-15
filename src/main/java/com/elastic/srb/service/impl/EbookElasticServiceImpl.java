@@ -124,4 +124,10 @@ public class EbookElasticServiceImpl implements EbookElasticService {
 		return bookElastic.findByLanguageName(name, pageable);
 	}
 
+	@Override
+	public void deleteAll() {
+		// TODO Auto-generated method stub
+		bookElastic.deleteAll();
+	}
+
 }

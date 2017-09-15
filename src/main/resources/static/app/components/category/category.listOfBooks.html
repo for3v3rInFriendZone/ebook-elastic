@@ -1,0 +1,63 @@
+
+<!-- Header -->
+<section style="background-color: gray;">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-10 col-sm-offset-1 toppad">
+				<br/><br/><br/><br/>
+				<div class="panel panel-info">
+		            <div class="panel-heading text-center">
+		              <h3 class="panel-title">{{ccr.title}}</h3>
+		            </div>
+		            <div class="panel-body">
+		              <div class="row">	  
+		                <div class="col-md-6 col-md-offset-3"> 
+		                  <div ng-show="ccr.books.length == 0">
+		                  	<img class="img-responsive col-sm-offset-5" alt="User Pic" src="https://cdn4.iconfinder.com/data/icons/emoticons-outline/512/21-512.png"  width="110" height="190"/>
+		                  	<br/>
+		                    <p class="text-center" style="color: blue;"> Soory, no books avaliable for this category.</p>
+		                  </div>
+		                  <table class="table table-hover table-user-information">
+		                  	<!--  <thead>
+		                  		<th>Title</th>
+		                  		<th>Author</th>
+		                  		<th>Keywords</th>
+		                  		<th>Publication year</th>
+		                  		<th>Category</th>
+		                  		<th>Language</th>
+		                  		<th>User</th>
+		                  	</thead>
+		                    <tbody>
+		                      <tr ng-repeat="book in ccr.books | orderBy: 'id'">
+		                        <td ng-click="ccr.editBook(book.id)"> {{book.title}} </td>
+		                        <td ng-click="ccr.editBook(book.id)"> {{book.author}} </td>
+		                        <td ng-click="ccr.editBook(book.id)"> {{book.keywords}} </td>
+		                        <td ng-click="ccr.editBook(book.id)"> {{book.publication_year}} </td>  
+		                        <td ng-click="ccr.editBook(book.id)"> {{book.category.name}} </td>
+		                        <td ng-click="ccr.editBook(book.id)"> {{book.language.name}} </td>  
+		                        <td ng-click="ccr.editBook(book.id)"> {{book.user.firstname}} &nbsp {{book.user.lastname}} </td>                    
+		                      </tr>                    
+		                    </tbody>
+		                    -->
+		                    <tbody>
+		                    	<tr ng-repeat="book in ccr.books | orderBy: 'id'">
+		                    		<td ng-click="ccr.bookUser(book.id)">
+		                    			<img class="img-responsive col-sm-offset-5" alt="User Pic" src="{{book.image}}"  width="110" height="190"/>
+		                    			<a ng-click="ccr.bookUser(book.id)">{{book.title}}</a> &nbsp by &nbsp <i> {{book.author}} </i> 
+		                    		</td>
+		                    	</tr>
+		                    </tbody>
+		                  </table>
+		                </div>
+		              </div>
+           			</div>
+           			<div class="panel-footer">
+                        <div class="text-center">                               
+                            <button type="button" ng-click="ccr.cancel()" class="btn btn-sm btn-info data-toggle="tooltip" data-placement="bottom" title="Back"><i class="fa fa-arrow-left"></i></button>
+                        </div>
+                    </div>
+		        </div>
+			</div>
+		</div>
+	</div>
+</section>

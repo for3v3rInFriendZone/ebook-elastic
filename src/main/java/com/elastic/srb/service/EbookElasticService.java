@@ -11,6 +11,8 @@ public interface EbookElasticService {
 	Ebook save(Ebook book);
 
 	void delete(Ebook book);
+	
+	void deleteAll();
 
 	Ebook findOne(Long id);
 
