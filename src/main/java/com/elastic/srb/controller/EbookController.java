@@ -1,26 +1,33 @@
 package com.elastic.srb.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.apache.commons.compress.utils.IOUtils;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanQuery;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.common.xcontent.ToXContent.Params;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -191,15 +198,34 @@ public class EbookController {
 	@RequestMapping(value="/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Ebook> deleteBook(@PathVariable Long id) {
 
-		//ebookElastic.delete(ebookElastic.findOne(id));
-		ebookElastic.deleteAll();
+		ebookElastic.delete(ebookElastic.findOne(id));
 		return new ResponseEntity<Ebook>(HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/lang/{value}", method = RequestMethod.GET)
-	public ResponseEntity<List<Ebook>> test(@PathVariable String value) throws IOException {
-
-		Page<Ebook> response = ebookElastic.findByLanguageName(value, new PageRequest(1, 20));
-		return new ResponseEntity<List<Ebook>>(response.getContent(), HttpStatus.OK);
+	@RequestMapping(value="/delete/all", method = RequestMethod.DELETE)
+	public ResponseEntity<List<Ebook>> deleteAllBooks() throws IOException {
+		
+		ebookElastic.deleteAll();
+		return new ResponseEntity<List<Ebook>>(HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "download/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	public ResponseEntity<byte[]> downloadBook(@PathVariable Long id) {
+
+		Ebook ebook = ebookElastic.findOne(id);
+		
+		File file = new File("C:/Users/Marko/git/ebook-elastic/src/main/resources/static/assets/PdfStorage/" + ebook.getFilename());
+		
+		try {
+	        FileSystemResource fileResource = new FileSystemResource(file);
+
+	        byte[] base64Bytes = Base64.encodeBase64(IOUtils.toByteArray(fileResource.getInputStream()));
+
+	        return ResponseEntity.ok().body(base64Bytes);
+	    } catch (IOException e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+	    }
+	}
+	
+	
 }

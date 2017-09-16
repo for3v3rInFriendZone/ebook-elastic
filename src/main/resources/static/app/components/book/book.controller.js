@@ -11,6 +11,7 @@
 		var bcr = this;	
 		
 		bcr.book = book;
+		bcr.bookUser = localStorageService.get('user');
 		bcr.title = title;
 		bcr.users = users;
 		bcr.categories = categories;
@@ -19,6 +20,8 @@
 		bcr.cancel = cancel;
 		bcr.done = done;
 		bcr.remove = remove;
+		bcr.downloadBook = downloadBook;
+		bcr.downloadLink = 'file:///C:/Users/Marko/git/ebook-elastic/src/main/resources/static/assets/PdfStorage/' + bcr.book.filename;
 		
 		$scope.upload = function (file) {
 	        Upload.upload({
@@ -66,6 +69,21 @@
 		function successRemoveModal() {
 			alert('Book with id: '+ bcr.book.id + ' has been successfully removed.');
 			$state.go('main.listBook');
+		}
+		
+		function downloadBook(bookId) {
+			Book.download(bookId).then(function(response) {
+				
+				var anchor = angular.element('<a/>');
+		        anchor.attr({
+		            href: 'data:application/octet-stream;base64,' + response,
+		            target: '_self',
+		            download: bcr.book.title + ".pdf"       
+		            });
+
+		        angular.element(document.body).append(anchor);
+		        anchor[0].click();
+			});
 		}
 	}
 })();

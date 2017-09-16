@@ -57,7 +57,7 @@ public class Ebook implements Serializable {
 	private String mimeBook;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "CATEGORY", nullable = false)
+	@JoinColumn(name = "CATEGORY")
 	private Category category;
 
 	@ManyToOne(fetch = FetchType.EAGER)

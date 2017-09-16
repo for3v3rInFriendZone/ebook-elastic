@@ -10,6 +10,7 @@
 		
 		var uec = this;
 		uec.user = selectedUser;
+		uec.logedUser = localStorageService.get('user');
 		uec.currentState = $state.current.name;
 		uec.cancel = cancel;
 		uec.newPass = newPass;

@@ -54,7 +54,7 @@
 			}
 		})
 		.state("main.categoryBooks", {
-			url: '/categorie/:id/books',
+			url: '/category/:id/books',
 			views:{
 				'main@': {
 					resolve: {

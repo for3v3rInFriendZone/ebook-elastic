@@ -49,9 +49,13 @@
 				                        	<p class="text-center" ng-show="uec.notAnImage" style="color: red; font-size: 14px;">You did not upload an image.</p>
 										</td>
 				                      </tr>
+				                      <tr>
 				                        <td><b>Category: </b></td>
-				                        <td> <select class="form-control" name="chooseCategory" ng-options="category.name for category in uec.categories track by category.name" ng-model="uec.user.category">
+				                        <td ng-if="uec.logedUser.type == 'admin'"> <select class="form-control" name="chooseCategory" ng-options="category.name for category in uec.categories track by category.name" ng-model="uec.user.category">
 											 </select> 
+										</td>
+										<td ng-if="uec.logedUser.type == 'subscriber'">
+											 {{uec.user.category.name}}
 										</td>
 				                      </tr>
 				                    </tbody>

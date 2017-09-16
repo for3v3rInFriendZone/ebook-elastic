@@ -5,10 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.ParseContext;
@@ -19,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.SAXException;
 
+import com.elastic.srb.elasticRepository.EbookElasticRepository;
 import com.elastic.srb.model.Ebook;
 import com.elastic.srb.repository.EbookRepository;
 import com.elastic.srb.service.EbookElasticService;
@@ -31,7 +28,7 @@ public class EbookServiceImpl implements EbookService {
 	EbookRepository ebookRep;
 	
 	@Autowired
-	EbookElasticService ebookElastic;
+	private EbookElasticRepository ebookElastic;
 	
 
 	@Override
@@ -94,8 +91,9 @@ public class EbookServiceImpl implements EbookService {
 	public Ebook uploadPDF(MultipartFile pdf) {
 
 		File tempFile = null;
+		File fileLocation = new File("C:/Users/Marko/git/ebook-elastic/src/main/resources/static/assets/PdfStorage");
 		try {
-			tempFile = File.createTempFile("template", ".pdf", null);
+			tempFile = File.createTempFile("template", ".pdf", fileLocation);
 		} catch (IOException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -143,6 +141,8 @@ public class EbookServiceImpl implements EbookService {
 		}
 		Ebook ebook = new Ebook();
 		ebook.setText(handler.toString());
+		ebook.setFilename(tempFile.getName());
+		ebook.setMimeBook("application/pdf");
 		// getting the content of the document
 		System.out.println("Contents of the PDF ########### :" + handler.toString());
 

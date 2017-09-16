@@ -37,6 +37,9 @@
 			},
 			search: function(booksDTO) {
 				return Restangular.all('book/search').post(booksDTO);
+			},
+			download: function(bookId) {
+				return Restangular.one('book/download', bookId).get();
 			}
 		};
 	}

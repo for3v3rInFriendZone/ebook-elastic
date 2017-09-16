@@ -93,7 +93,7 @@
 		
 		editTitle.$inject = ['$stateParams'];
 		function editTitle($stateParams) {
-			return "Edit book with id " + $stateParams.id;
+			return "Edit book";
 		}
 		
 		getUsers.$inject = ['User'];
