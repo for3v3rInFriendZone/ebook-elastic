@@ -18,69 +18,50 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Service;
 
+import com.elastic.srb.dto.EbookDTO;
 import com.elastic.srb.dto.SearchDTO;
 import com.elastic.srb.elasticRepository.EbookElasticRepository;
 import com.elastic.srb.model.Ebook;
 import com.elastic.srb.model.Language;
 import com.elastic.srb.repository.EbookRepository;
 import com.elastic.srb.service.EbookElasticService;
+import com.elastic.srb.service.EbookService;
 
 @Service
 public class EbookElasticServiceImpl implements EbookElasticService {
 
 	@Autowired
 	private EbookElasticRepository bookElastic;
+	
+	@Autowired
+	private EbookService ebookSer;
 
 	@Autowired
 	ElasticsearchOperations operations;
 
 	@Override
-	public Ebook save(Ebook book) {
+	public EbookDTO save(EbookDTO book) {
 		// TODO Auto-generated method stub
-		operations.putMapping(Ebook.class);
+		operations.putMapping(EbookDTO.class);
 		return bookElastic.save(book);
 	}
 
 	@Override
-	public void delete(Ebook book) {
+	public void delete(EbookDTO book) {
 		// TODO Auto-generated method stub
 		bookElastic.delete(book);
 	}
 
 	@Override
-	public Ebook findOne(Long id) {
+	public EbookDTO findOne(Long id) {
 		// TODO Auto-generated method stub
 		return bookElastic.findOne(id);
 	}
 
 	@Override
-	public Iterable<Ebook> findAll() {
+	public Iterable<EbookDTO> findAll() {
 		// TODO Auto-generated method stub
 		return bookElastic.findAll();
-	}
-
-	@Override
-	public List<Ebook> findByTitle(String title) {
-		// TODO Auto-generated method stub
-		return bookElastic.findByTitle(title);
-	}
-
-	@Override
-	public List<Ebook> findByAuthor(String author) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Ebook> findByKeywords(String keyword) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Ebook> findByText(String text) {
-		// TODO Auto-generated method stub
-		return bookElastic.findByText(text);
 	}
 
 	@Override
@@ -118,15 +99,15 @@ public class EbookElasticServiceImpl implements EbookElasticService {
 
 		SearchQuery sq = new NativeSearchQuery(bqb);
 
-		List<Ebook> returnBooks = operations.queryForList(sq, Ebook.class);
+		List<EbookDTO> returnBooksDTO = operations.queryForList(sq, EbookDTO.class);
+		
+		List<Ebook> returnBooks = new ArrayList<Ebook>();
 
+		for(int i=0; i<returnBooksDTO.size(); i++) {
+			returnBooks.add(ebookSer.toEbook(returnBooksDTO.get(i)));
+		}
+		
 		return returnBooks;
-	}
-
-	@Override
-	public Page<Ebook> findByLanguageName(String name, Pageable pageable) {
-		// TODO Auto-generated method stub
-		return bookElastic.findByLanguageName(name, pageable);
 	}
 
 	@Override

@@ -40,6 +40,7 @@ import org.springframework.web.multipart.MultipartFile;
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 import static org.elasticsearch.index.query.MatchQueryBuilder.Operator.AND;
 
+import com.elastic.srb.dto.EbookDTO;
 import com.elastic.srb.dto.SearchDTO;
 import com.elastic.srb.model.Ebook;
 import com.elastic.srb.model.Language;
@@ -62,9 +63,13 @@ public class EbookController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<Ebook>> getBooks() {
 
-		Iterable<Ebook> books = ebookElastic.findAll();
+		Iterable<EbookDTO> books = ebookElastic.findAll();
+		List<EbookDTO> returnBooksDTO = new ArrayList<EbookDTO>();
 		List<Ebook> returnBooks = new ArrayList<Ebook>();
-		books.forEach(returnBooks::add);
+		books.forEach(returnBooksDTO::add);
+		for(int i=0; i<returnBooksDTO.size(); i++) {
+			returnBooks.add(ebookSer.toEbook(returnBooksDTO.get(i)));
+		}
 		
 		return new ResponseEntity<List<Ebook>>(returnBooks, HttpStatus.OK);
 	}
@@ -72,7 +77,8 @@ public class EbookController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Ebook> getBook(@PathVariable Long id) {
 
-		Ebook ebook = ebookElastic.findOne(id);
+		Ebook ebook = ebookSer.toEbook(ebookElastic.findOne(id));
+		
 		return new ResponseEntity<Ebook>(ebook, HttpStatus.OK);
 	}
 	
@@ -191,8 +197,8 @@ public class EbookController {
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<Ebook> saveBook(@RequestBody Ebook ebook) throws IOException {
 		
-		Ebook newBook = ebookElastic.save(ebookSer.save(ebook));
-		return new ResponseEntity<Ebook>(newBook, HttpStatus.CREATED);
+		EbookDTO newBook = ebookElastic.save(ebookSer.toEbookDTO(ebookSer.save(ebook)));
+		return new ResponseEntity<Ebook>(ebookSer.toEbook(newBook), HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.DELETE)
@@ -209,12 +215,12 @@ public class EbookController {
 		return new ResponseEntity<List<Ebook>>(HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "download/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@RequestMapping(value = "/download/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<byte[]> downloadBook(@PathVariable Long id) {
 
-		Ebook ebook = ebookElastic.findOne(id);
+		Ebook ebook = ebookSer.toEbook(ebookElastic.findOne(id));
 		
-		File file = new File("C:/Users/Marko/git/ebook-elastic/src/main/resources/static/assets/PdfStorage/" + ebook.getFilename());
+		File file = new File("C:/Users/Marko.STRISKO/git/ebook-elastic/src/main/resources/static/assets/PdfStorage/" + ebook.getFilename());
 		
 		try {
 	        FileSystemResource fileResource = new FileSystemResource(file);
@@ -225,6 +231,16 @@ public class EbookController {
 	    } catch (IOException e) {
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 	    }
+	}
+	
+	@RequestMapping(value="/test", method = RequestMethod.GET)
+	public ResponseEntity<List<EbookDTO>> getBooksTest() {
+
+		Iterable<EbookDTO> books = ebookElastic.findAll();
+		List<EbookDTO> returnBooks = new ArrayList<EbookDTO>();
+		books.forEach(returnBooks::add);
+		
+		return new ResponseEntity<List<EbookDTO>>(returnBooks, HttpStatus.OK);
 	}
 	
 	

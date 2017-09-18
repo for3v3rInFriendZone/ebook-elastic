@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.elastic.srb.dto.EbookDTO;
 import com.elastic.srb.model.Ebook;
 
 public interface EbookService {
@@ -23,5 +24,9 @@ public interface EbookService {
 	public void deleteAll();
 	
 	public Ebook uploadPDF(MultipartFile pdf);
+	
+	public Ebook toEbook(EbookDTO ebookDto);
+	
+	public EbookDTO toEbookDTO(Ebook ebook);
 	
 }

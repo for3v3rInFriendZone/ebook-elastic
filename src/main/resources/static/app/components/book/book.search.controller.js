@@ -25,7 +25,14 @@
 		}
 		
 		function goToDetails(bookId) {
-			$state.go('main.userBook', {id: bookId});
+			if(bsc.user != null && bsc.user != undefined) {
+				if(bsc.user.type == 'admin') {
+					$state.go('main.editBook', {id: bookId});
+					return;
+				}
+			}
+			
+			$state.go('main.userBook', {id: bookId});	
 		}
 		
 		function search() {
@@ -51,7 +58,7 @@
 			}
 			
 			if(bsc.bookDTOLanguage != undefined && bsc.bookDTOLanguage.value != null && bsc.bookDTOLanguage != '') {
-				bsc.bookDTOLanguage.field = 'langauge';
+				bsc.bookDTOLanguage.field = 'languageName';
 				listOfSearches.push(bsc.bookDTOLanguage);
 			}
 			

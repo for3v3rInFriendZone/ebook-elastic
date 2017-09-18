@@ -20,7 +20,6 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 @Entity
 @Table(name = "EBOOK")
-@Document(indexName = "books", type = "books", shards = 1)
 public class Ebook implements Serializable {
 
 	/**
@@ -62,7 +61,6 @@ public class Ebook implements Serializable {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "LANGUAGE", nullable = false)
-	@Field(type = FieldType.Nested)
 	private Language language;
 
 	@ManyToOne(fetch = FetchType.EAGER)

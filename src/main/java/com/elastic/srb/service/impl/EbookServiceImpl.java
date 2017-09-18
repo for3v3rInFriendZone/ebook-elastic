@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.SAXException;
 
+import com.elastic.srb.dto.EbookDTO;
 import com.elastic.srb.elasticRepository.EbookElasticRepository;
 import com.elastic.srb.model.Ebook;
 import com.elastic.srb.repository.EbookRepository;
@@ -40,7 +41,7 @@ public class EbookServiceImpl implements EbookService {
 	@Override
 	public Ebook update(Long id, Ebook ebook) {
 		// TODO Auto-generated method stub
-		Ebook editedBook = ebookElastic.findOne(id);
+		Ebook editedBook = toEbook(ebookElastic.findOne(id));
 		
 		editedBook.setAuthor(ebook.getAuthor());
 		editedBook.setCategory(ebook.getCategory());
@@ -54,7 +55,7 @@ public class EbookServiceImpl implements EbookService {
 		editedBook.setTitle(ebook.getTitle());
 		editedBook.setUser(ebook.getUser());
 		
-		return ebookElastic.save(save(editedBook));
+		return toEbook(ebookElastic.save(toEbookDTO(save(editedBook))));
 	}
 
 	@Override
@@ -91,7 +92,7 @@ public class EbookServiceImpl implements EbookService {
 	public Ebook uploadPDF(MultipartFile pdf) {
 
 		File tempFile = null;
-		File fileLocation = new File("C:/Users/Marko/git/ebook-elastic/src/main/resources/static/assets/PdfStorage");
+		File fileLocation = new File("C:/Users/Marko.STRISKO/git/ebook-elastic/src/main/resources/static/assets/PdfStorage");
 		try {
 			tempFile = File.createTempFile("template", ".pdf", fileLocation);
 		} catch (IOException e2) {
@@ -160,6 +161,30 @@ public class EbookServiceImpl implements EbookService {
 		ebook.setPublication_year(metadata.get("created"));
 
 		return ebook;
+	}
+
+	@Override
+	public Ebook toEbook(EbookDTO ebookDto) {
+		// TODO Auto-generated method stub
+		Ebook ebook = findOne(ebookDto.getId());
+		ebook.setText(ebookDto.getText());
+		
+		return ebook;
+	}
+
+	@Override
+	public EbookDTO toEbookDTO(Ebook ebook) {
+		EbookDTO ebookDto = new EbookDTO();
+		
+		ebookDto.setId(ebook.getId());
+		ebookDto.setAuthor(ebook.getAuthor());
+		ebookDto.setKeywords(ebook.getKeywords());
+		ebookDto.setLanguageName(ebook.getLanguage().getName());
+		ebookDto.setPublication_year(ebook.getPublication_year());
+		ebookDto.setText(ebook.getText());
+		ebookDto.setTitle(ebook.getTitle());
+		
+		return ebookDto;
 	}
 
 }
