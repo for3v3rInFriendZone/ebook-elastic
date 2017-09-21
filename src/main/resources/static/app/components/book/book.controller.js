@@ -22,6 +22,7 @@
 		bcr.remove = remove;
 		bcr.downloadBook = downloadBook;
 		bcr.downloadLink = 'file:///C:/Users/Marko/git/ebook-elastic/src/main/resources/static/assets/PdfStorage/' + bcr.book.filename;
+		bcr.noCategory = false;
 		
 		$scope.upload = function (file) {
 	        Upload.upload({
@@ -85,5 +86,12 @@
 		        anchor[0].click();
 			});
 		}
+		
+		if(bcr.bookUser != null && bcr.bookUser != undefined) {
+			if(bcr.bookUser.category == null || bcr.bookUser.category == undefined) {
+				bcr.noCategory = true;
+			}
+		}
+		
 	}
 })();

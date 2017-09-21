@@ -92,7 +92,7 @@ public class EbookServiceImpl implements EbookService {
 	public Ebook uploadPDF(MultipartFile pdf) {
 
 		File tempFile = null;
-		File fileLocation = new File("C:/Users/Marko.STRISKO/git/ebook-elastic/src/main/resources/static/assets/PdfStorage");
+		File fileLocation = new File("C:/Users/Marko/git/ebook-elastic/src/main/resources/static/assets/PdfStorage");
 		try {
 			tempFile = File.createTempFile("template", ".pdf", fileLocation);
 		} catch (IOException e2) {
@@ -168,6 +168,7 @@ public class EbookServiceImpl implements EbookService {
 		// TODO Auto-generated method stub
 		Ebook ebook = findOne(ebookDto.getId());
 		ebook.setText(ebookDto.getText());
+		ebook.setHighlight(ebookDto.getHighlight());
 		
 		return ebook;
 	}

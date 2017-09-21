@@ -43,6 +43,9 @@ public class Ebook implements Serializable {
 	@Transient
 	private String text;
 
+	@Transient
+	private String highlight;
+
 	@Column(name = "PUBLICATION_YEAR")
 	private String publication_year;
 
@@ -186,6 +189,14 @@ public class Ebook implements Serializable {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public String getHighlight() {
+		return highlight;
+	}
+
+	public void setHighlight(String highlight) {
+		this.highlight = highlight;
 	}
 
 }

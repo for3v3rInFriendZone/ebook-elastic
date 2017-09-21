@@ -6,15 +6,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.highlight.HighlightBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.SearchResultMapper;
+import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
+import org.springframework.data.elasticsearch.core.aggregation.impl.AggregatedPageImpl;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Service;
 
@@ -98,13 +106,41 @@ public class EbookElasticServiceImpl implements EbookElasticService {
 		}
 
 		SearchQuery sq = new NativeSearchQuery(bqb);
+		
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(bqb).withHighlightFields(new HighlightBuilder.Field("text")).build();
+		
+		Page<EbookDTO> returnPage = operations.queryForPage(searchQuery, EbookDTO.class, new SearchResultMapper(){
 
-		List<EbookDTO> returnBooksDTO = operations.queryForList(sq, EbookDTO.class);
+			@Override
+			public <T> AggregatedPage<T> mapResults(SearchResponse arg0, Class<T> arg1, Pageable arg2) {
+				List<EbookDTO> chunk = new ArrayList<EbookDTO>();
+	            for (SearchHit searchHit : arg0.getHits()) {
+	                if (arg0.getHits().getHits().length <= 0) {
+	                    return null;
+	                }
+	                EbookDTO book = new EbookDTO();
+	                book.setId(Long.parseLong(searchHit.getId()));
+	                if(searchHit.getHighlightFields().get("text") != null) {
+	                	book.setHighlight(searchHit.getHighlightFields().get("text").fragments()[0].toString());
+	                }
+	                chunk.add(book);
+	            }
+	            if (chunk.size() > 0) {
+	                return new AggregatedPageImpl<T>((List<T>) chunk);
+	            }
+	            return null;
+			}
+			
+		});
+
+	//	List<EbookDTO> returnBooksDTO = operations.queryForList(searchQuery, EbookDTO.class);
 		
 		List<Ebook> returnBooks = new ArrayList<Ebook>();
 
-		for(int i=0; i<returnBooksDTO.size(); i++) {
-			returnBooks.add(ebookSer.toEbook(returnBooksDTO.get(i)));
+		if(returnPage != null) {
+			for(int i=0; i<returnPage.getContent().size(); i++) {
+				returnBooks.add(ebookSer.toEbook(returnPage.getContent().get(i)));
+			}
 		}
 		
 		return returnBooks;

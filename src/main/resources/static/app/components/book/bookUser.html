@@ -46,7 +46,7 @@
 													<td><b>Language: </b></td>
 													<td>{{bcr.book.language.name}}</td>
 												</tr>
-												<tr ng-if="bcr.bookUser.category.name == bcr.book.category.name">
+												<tr ng-if="bcr.bookUser.category.name == bcr.book.category.name || bcr.noCategory">
 													<td><b> Download book: </b></td>
 													<td>
 														<a ng-click="bcr.downloadBook(bcr.book.id)" target="_blank">

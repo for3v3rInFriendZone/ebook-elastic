@@ -220,7 +220,7 @@ public class EbookController {
 
 		Ebook ebook = ebookSer.toEbook(ebookElastic.findOne(id));
 		
-		File file = new File("C:/Users/Marko.STRISKO/git/ebook-elastic/src/main/resources/static/assets/PdfStorage/" + ebook.getFilename());
+		File file = new File("C:/Users/Marko/git/ebook-elastic/src/main/resources/static/assets/PdfStorage/" + ebook.getFilename());
 		
 		try {
 	        FileSystemResource fileResource = new FileSystemResource(file);

@@ -5,8 +5,8 @@
 		.module('ebook-book')
 		.controller('BookSearchController', BookSearchController);
 
-	BookSearchController.$inject = ['localStorageService', '$state', 'books', 'categories', 'languages', 'Book'];
-	function BookSearchController(localStorageService, $state, books, categories, languages, Book) {
+	BookSearchController.$inject = ['localStorageService', '$state', 'books', 'categories', 'languages', 'Book', '$scope','$sce'];
+	function BookSearchController(localStorageService, $state, books, categories, languages, Book, $scope, $sce) {
 		
 		var bsc = this;	
 		bsc.user = localStorageService.get('user');
@@ -64,6 +64,11 @@
 			
 			Book.search(listOfSearches).then(function(result){
 				bsc.searchResults = result;
+				for(var i=0; i<result.length; i++) {
+					if(result[i].highlight != null && result[i].highlight != undefined) {
+						$scope.message = $sce.trustAsHtml(result[i].highlight);
+					}
+				}
 			});
 		}
 		

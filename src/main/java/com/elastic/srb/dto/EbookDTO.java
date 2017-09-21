@@ -17,6 +17,8 @@ public class EbookDTO {
 
 	private String text;
 
+	private String highlight;
+
 	private String publication_year;
 
 	private String image;
@@ -102,6 +104,14 @@ public class EbookDTO {
 
 	public void setLanguageName(String languageName) {
 		this.languageName = languageName;
+	}
+
+	public String getHighlight() {
+		return highlight;
+	}
+
+	public void setHighlight(String highlight) {
+		this.highlight = highlight;
 	}
 
 }
